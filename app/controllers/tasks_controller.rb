@@ -11,8 +11,9 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.create(task_params)
+    # binding.pry
     if @task.save
-      redirect_to "new_task_path", notice: "You Create Task!!!"
+      redirect_to tasks_path, notice: "You Create Task!!!"
     else
       render :new
     end

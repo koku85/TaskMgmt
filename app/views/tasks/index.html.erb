@@ -15,6 +15,7 @@
     <td><%= link_to "Edit Task", edit_task_path(task.id), data: { confirm: '編集してしまって、本当にいいんですか？' } %></td>
     <td><%= link_to 'Destroy Task', task_path(task.id), method: :delete, data: { confirm: 'あなたはこのTaskを破壊しようとしています。よろしいんですね！？' } %></td>
   </tr>
+  <% end %>
   <%= link_to 'Tasks Create', new_task_path %>
-<% end %>
+
 </table>
