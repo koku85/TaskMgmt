@@ -1,0 +1,21 @@
+<h1>Task Index</h1>
+
+<p><%= notice %></p>
+
+<table>
+  <tr>
+    <th>Task Name</th>
+    <th>Details</th>
+  </tr>
+<% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.name %></td>
+    <td><%= task.details %></td>
+    <td><%= link_to 'More Details', task_path(task.id) %></td>
+    <td><%= link_to "Edit Task", edit_task_path(task.id), data: { confirm: '編集してしまって、本当にいいんですか？' } %></td>
+    <td><%= link_to 'Destroy Task', task_path(task.id), method: :delete, data: { confirm: 'あなたはこのTaskを破壊しようとしています。よろしいんですね！？' } %></td>
+  </tr>
+  <% end %>
+  <%= link_to 'Tasks Create', new_task_path %>
+
+</table>
