@@ -11,8 +11,9 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'task_name', with: 'タスク名'
         fill_in 'task_details', with: 'タスク詳細'
+        fill_in 'task_deadline', with: '002020-01-01'
         click_on '登録する'
-        expect(page).to have_content 'タスク詳細'
+        expect(page).to have_content '2020-01-01'
       end
     end
   end
@@ -33,6 +34,16 @@ RSpec.describe 'タスク管理機能', type: :system do
         # byebug
         expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
         expect(task_list[1]).to have_content 'Factoryで作ったデフォルトのタイトル１'
+      end
+    end
+    context '終了期限でソートするというリンクを押した場合' do
+      it '終了期限の降順に並び替えられたタスク一覧が表示される' do
+        visit tasks_path
+        click_on '終了期限でソートする'
+        task_list = all('.task_row')
+
+        expect(task_list[0]).to have_content '2020-02-01'
+        expect(task_list[1]).to have_content '2020-01-01'
       end
     end
   end
