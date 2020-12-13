@@ -12,6 +12,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in 'task_name', with: 'タスク名'
         fill_in 'task_details', with: 'タスク詳細'
         fill_in 'task_deadline', with: '002020-01-01'
+        select '未着手', from: 'task_status'
         click_on '登録する'
         expect(page).to have_content '2020-01-01'
       end
@@ -36,16 +37,35 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[1]).to have_content 'Factoryで作ったデフォルトのタイトル１'
       end
     end
-    context '終了期限でソートするというリンクを押した場合' do
-      it '終了期限の降順に並び替えられたタスク一覧が表示される' do
-        visit tasks_path
-        click_on '終了期限でソートする'
-        task_list = all('.task_row')
 
-        expect(task_list[0]).to have_content '2020-02-01'
-        expect(task_list[1]).to have_content '2020-01-01'
+    context 'タイトルであいまい検索をした場合' do
+      it '検索キーワードを含むタスクで絞り込まれる' do
+        visit tasks_path
+        fill_in 'タスク名', with: 'Factory'
+        click_on '検索'
+        expect(page).to have_content 'Factory'
       end
     end
+
+    context 'ステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        visit tasks_path
+        select '未着手', from: 'ステータス'
+        click_on '検索'
+        expect(page).to have_content '未着手'
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+        visit tasks_path
+        fill_in 'タスク名', with: 'タイトル２'
+        select '着手', from: 'ステータス'
+        click_on '検索'
+        expect(page).to have_content 'タイトル２'
+        expect(page).to have_content '着手'
+      end
+    end
+
   end
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do

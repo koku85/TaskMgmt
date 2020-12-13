@@ -211,3 +211,10 @@ ja:
     destroy: 削除
     new: タスクを作成する
     back: 戻る
+    task:
+      search: 検索
+      name: タスク名
+      details: 詳細
+      status: ステータス
+      deadline: 終了期限
+      priority: 優先度
