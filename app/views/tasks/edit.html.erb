@@ -25,7 +25,12 @@
   </div>
   <div class="task_status">
     <%= form.label :status %>
-    <%= form.select :status,[['未着手','未着手'],['着手中','着手中'],['完了','完了']], {}  %>
+    <%= form.select :status,Task.statuses.keys, {}  %>
   </div>
+  <div class="task_priority">
+    <%= form.label :priority %>
+    <%= form.select :priority,Task.priorities.keys, {}  %>
+  </div>
+
   <%= form.submit %>
 <% end %>

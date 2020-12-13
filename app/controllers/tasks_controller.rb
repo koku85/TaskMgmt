@@ -6,6 +6,8 @@ class TasksController < ApplicationController
 
     if params[:sort_expired]
       @tasks = Task.all.order(deadline: "DESC")
+    elsif params[:sort_priority]
+      @tasks = Task.all.order(priority: "DESC")
     else
       @tasks = Task.all.order(created_at: "DESC")
     end
@@ -72,7 +74,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :details, :deadline, :status)
+    params.require(:task).permit(:name, :details, :deadline, :status, :priority)
   end
 
   def set_task
@@ -80,6 +82,6 @@ class TasksController < ApplicationController
   end
 
   def task_search_params
-    params.fetch(:search, {}).permit(:name, :details, :deadline, :status)
+    params.fetch(:search, {}).permit(:name, :details, :deadline, :status, :priority)
   end
 end

@@ -24,7 +24,12 @@
     <%= form.date_field :deadline %>
   </div>
   <div class="task_status">
-    <%= form.hidden_field :status,:value => "未着手" %>
+    <%= form.label :status %>
+    <%= form.select :status,Task.statuses.keys, {}  %>
+  </div>
+  <div class="task_priority">
+    <%= form.label :priority %>
+    <%= form.select :priority,Task.priorities.keys, {}  %>
   </div>
   <%= form.submit %>
 <% end %>
