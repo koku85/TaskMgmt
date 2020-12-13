@@ -2,17 +2,32 @@
 
 <p><%= notice %></p>
 
+
+<%= form_with(model: Task.new, local: true, method: :get, url: tasks_path) do |form| %>
+    <%= form.label :name, t("view.task.name") %>
+    <%= form.text_field :name %>
+    <%= form.label :details, t("view.task.details") %>
+    <%= form.text_field :details %>
+    <%= form.label :status, t("view.task.status") %>
+    <%= form.select :status, Task.statuses.keys, include_blank: true %>
+      <%# <%= form.label :search_with_label, t("view.task.label") %> %>
+      <%# <%= form.select :label_id, @labels.map{ |label| [label.name, label.id] }, include_blank: true, selected: "" %> %>
+    <%= form.submit t("view.task.search"), class: 'btn btn-sm btn-outline-success my-2 my-sm-0' %>
+<% end %>
+
 <table>
   <tr>
     <th>タスク名</th>
     <th>詳細</th>
     <th>終了期限</th>
+    <th>ステータス</th>
   </tr>
 <% @tasks.each do |task| %>
   <tr class="task_row">
     <td><%= task.name %></td>
     <td><%= task.details %></td>
     <td><%= task.deadline %></td>
+    <td><%= task.status %></td>
     <td><%= link_to t('view.show'), task_path(task.id) %></td>
     <td><%= link_to t('view.edit'), edit_task_path(task.id), data: { confirm: '編集してしまって、本当にいいんですか？' } %></td>
     <td><%= link_to t('view.destroy'), task_path(task.id), method: :delete, data: { confirm: 'あなたはこのTaskを破壊しようとしています。よろしいんですね！？' } %></td>
@@ -22,3 +37,5 @@
   <p><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></p>
 
 </table>
+
+<%= paginate @tasks %>

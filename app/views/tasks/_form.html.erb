@@ -23,6 +23,9 @@
     <%= form.label :deadline %>
     <%= form.date_field :deadline %>
   </div>
+  <div class="task_status">
+    <%= form.hidden_field :status,:value => "未着手" %>
+  </div>
   <%= form.submit %>
 <% end %>
 <%= link_to "Task一覧画面にもどる", tasks_path %>
