@@ -4,12 +4,21 @@
     <title>TaskMgmt</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <meta name="viewport" content="width=device-width">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header>
+      <ul>
+        <li><a href="/tasks">タスク一覧</a></li>
+        <li><a href="/tasks/new">タスク新規作成</a></li>
+      </ul>
+    </header>
     <%= yield %>
+    <footer>
+      <p>© 2020 TaskMGMT Corp.</p>
+  </footer>
   </body>
 </html>
