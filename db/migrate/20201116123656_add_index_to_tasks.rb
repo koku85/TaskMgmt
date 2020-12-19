@@ -1,5 +1,5 @@
 class AddIndexToTasks < ActiveRecord::Migration[5.2]
   def change
-    add_index :tasks, :name, unique: true
+    add_index :tasks, :name
   end
 end
