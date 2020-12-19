@@ -38,6 +38,18 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
 
+    context '終了期限でソートするというリンクを押した場合' do
+      it 'タスクが終了期限の降順に並び替えられる' do
+        visit tasks_path
+        # save_and_open_page
+
+        task_list = all('.task_row')
+        # byebug
+        expect(task_list[0]).to have_content '2020-02-01'
+        expect(task_list[1]).to have_content '2020-01-01'
+      end
+    end
+
     context 'タイトルであいまい検索をした場合' do
       it '検索キーワードを含むタスクで絞り込まれる' do
         visit tasks_path
