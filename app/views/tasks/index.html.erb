@@ -2,20 +2,45 @@
 
 <p><%= notice %></p>
 
-<table>
+
+<%= form_with(model: Task.new, local: true, method: :get, url: tasks_path) do |form| %>
+    <%= form.label :name, t("view.task.name") %>
+    <%= form.text_field :name %>
+    <%= form.label :details, t("view.task.details") %>
+    <%= form.text_field :details %>
+    <%= form.label :status, t("view.task.status") %>
+    <%= form.select :status, Task.statuses.keys, include_blank: true %>
+      <%# <%= form.label :search_with_label, t("view.task.label") %>
+      <%# <%= form.select :label_id, @labels.map{ |label| [label.name, label.id] }, include_blank: true, selected: "" %>
+    <%= form.submit t("view.task.search"), class: 'btn btn-sm btn-outline-success my-2 my-sm-0' %>
+<% end %>
+
+<table class="container">
   <tr>
     <th>タスク名</th>
     <th>詳細</th>
+    <th>終了期限</th>
+    <th>ステータス</th>
+    <th>優先度</th>
   </tr>
 <% @tasks.each do |task| %>
   <tr class="task_row">
-    <td><%= task.name %></td>
-    <td><%= task.details %></td>
-    <td><%= link_to t('view.show'), task_path(task.id) %></td>
-    <td><%= link_to t('view.edit'), edit_task_path(task.id), data: { confirm: '編集してしまって、本当にいいんですか？' } %></td>
-    <td><%= link_to t('view.destroy'), task_path(task.id), method: :delete, data: { confirm: 'あなたはこのTaskを破壊しようとしています。よろしいんですね！？' } %></td>
+    <td class="col-md-3"><%= task.name %></td>
+    <td class="col-md-3"><%= task.details %></td>
+    <td class="col-md-2"><%= task.deadline %></td>
+    <td class="col-md-1"><%= task.status %></td>
+    <td class="col-md-1"><%= task.priority %></td>
+    <div class="btn-group" role="group">
+    <td><%= link_to t('view.show'), task_path(task.id), class: "btn btn-default" %></td>
+    <td><%= link_to t('view.edit'), edit_task_path(task.id), class: "btn btn-default", data: { confirm: 'タスクはどんどん編集して良いのです。' } %></td>
+    <td><%= link_to t('view.destroy'), task_path(task.id), method: :delete, class: "btn btn-default", data: { confirm: 'あなたはこのTaskを破壊しようとしています。よろしいんですね！？' } %></td>
+
   </tr>
   <% end %>
-  <%= link_to t('view.new'), new_task_path %>
+  <p><%= link_to t('view.new'), new_task_path %></p>
+  <p><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></p>
+  <p><%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %></p>
 
 </table>
+
+<%= paginate @tasks %>
