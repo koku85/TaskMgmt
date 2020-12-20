@@ -18,22 +18,11 @@ class TasksController < ApplicationController
       if params[:task][:status].present?
         @tasks = @tasks.search_with_status(params[:task][:status])
       end
-     # if params[:task][:label_id].present?
-     #   @tasks = @tasks.search_with_label(params[:task][:label_id])
-     # end
     end
    @tasks = @tasks.page(params[:page]).per(5)
   end
 
 
-
-  # def search
-  #   if params[:search].present?
-  #     @tasks = Task.where('title LIKE ?', "%#{params[:search]}%")
-  #   else
-  #     @tasks = Task.all
-  #   end
-  # end
 
   def new
     @task = Task.new
@@ -41,7 +30,6 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.create(task_params)
-    # binding.pry
     if @task.save
       redirect_to tasks_path, notice: "You Create Task!!!"
     else
